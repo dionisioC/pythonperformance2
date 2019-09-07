@@ -35,11 +35,31 @@
                 </p>
             </section>
 
+
+            <section><h1>Remember</h1>
+                <section>
+                <img src="images/Quotefancy-2035696-3840x2160.jpg"/>
+                </section>
+                <section>
+                    <p>
+                        Donald Ervin Knuth is an American computer scientist, mathematician, and professor emeritus at Stanford University. He is the 1974 recipient of the ACM Turing Award, informally considered the Nobel Prize of computer science. He is the author of the multi-volume work The Art of Computer Programming.
+                    </p>
+                </section>
+            </section>
+
             <section><h1>Disclaimer</h1>
                 <ul>
                     <li>Toy examples naively tested</li>
                     <li>Heavily influenced by the links in the references</li>
                     <li>In case of doubt try it yourself</li>
+                </ul>
+            </section>
+
+            <section><h1>Test setup</h1>
+                <ul>
+                    <li>Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz</li>
+                    <li>Linux dio-laptop 4.19.49-1-MANJARO #1 SMP PREEMPT Sun Jun 9 20:24:20 UTC 2019 x86_64 GNU/Linux</li>
+                    <li>Python 3.7.4</li>
                 </ul>
             </section>
 
@@ -60,26 +80,52 @@
             <section id="Comprehensions"><h1>Comprehensions</h1>
                 <section>
                     <ul>
-                        <li>Construct lists in a very natural, easy way, like a mathematician is used to do</li>
+                        <li>Construct lists, sets, dicts in a very natural, easy way, like a mathematician is used to do</li>
                         <li>No more Java style</li>
                         <li>Comprehensions perform better</li>
                     </ul>
                 </section>
                 <section>
+                    <h2>Lists</h2>
+                    <p>
+                        Data structure that stores an ordered collection of items.
+                    </p>
+                </section>
+                <section>
+                    <h2>Tuples</h2>
+                    <p>
+                        Non mutable data structure that stores an ordered collection of items.
+                    </p>
+                </section>
+                <section>
+                    <h2>Sets</h2>
+                    <p>
+                        Unordered data structure that stotrd non duplicate elements.
+                    </p>
+                </section>
+                <section>
+                    <h2>Dictionaries</h2>
+                    <p>
+                        Data structure that stores data in the form of key-value pairs. The keys defined for a dictionary need to be unique and inmutable.
+                    </p>
+                </section>
+                <section>
                     <h2>Bad way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    my_list = []
-    for value in range(number_of_loops):
-        my_list.append(value)
-                        </code></pre>
-                    <p>01 - Comprehensions/comprehensionsGood.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        my_list = []
+                        for value in range(number_of_loops):
+                            my_list.append(value)
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Good way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    my_list = [value for value in range(number_of_loops)]
-                        </code></pre>
-                    <p>01 - Comprehensions/comprehensionsBad.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        my_list = [value for value in range(number_of_loops)]
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Results</h2>
@@ -95,39 +141,43 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>0.09588098526</td>
-                            <td>0.132848978043</td>
+                            <td>0.04203200340270996</td>
+                            <td>0.06888532638549805</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>0.0807030200958</td>
-                            <td>0.160571098328</td>
+                            <td>0.040784597396850586</td>
+                            <td>0.06964945793151855</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>0.0885989665985</td>
-                            <td>0.138249874115</td>
+                            <td>0.04156994819641113</td>
+                            <td>0.06902456283569336</td>
                         </tr>
                         </tbody>
                     </table>
                 </section>
                 <section>
                     <h2>Bonus - validation</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    def modulus_validation(value):
-        return value % 2 == 0
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def modulus_validation(value):
+                            return value % 2 == 0
 
-    my_list = [value for value in range(number_of_loops)
-               if modulus_validation(value)]
-                        </code></pre>
+                        my_list = [value for value in range(number_of_loops)
+                                   if modulus_validation(value)]
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Bonus - tuples, sets, dicts</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    my_tuple = tuple(value for value in range(number_of_loops))
-    my_set = {value for value in range(number_of_loops)}
-    my_dict = {value: value for value in range(number_of_loops)}
-                        </code></pre>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        my_tuple = tuple(value for value in range(number_of_loops))
+                        my_set = {value for value in range(number_of_loops)}
+                        my_dict = {value: value for value in range(number_of_loops)}
+                        </code>
+                    </pre>
                 </section>
             </section>
 
@@ -139,8 +189,6 @@
                         <li>Performance when working with large data</li>
                         <li>Memory saver</li>
                         <li>range python3</li>
-                        <li>xrange python2</li>
-                        <li>range not a generator in python2</li>
                     </ul>
                 </section>
                 <section>
