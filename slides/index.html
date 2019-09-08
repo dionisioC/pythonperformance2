@@ -294,25 +294,27 @@
                     <ul>
                         <li>Item's positions are calculated rather than searched (O(1))</li>
                         <li>Inside a list, the interpreter searches the entire list</li>
-                        <li>Unordered collections of <strong style="text-decoration: underline;">unique</strong> elements
+                        <li>Unordered collections of <strong>unique</strong> elements
                         </li>
                     </ul>
                 </section>
                 <section>
                     <h2>Bad way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    my_list = [value for value in range(number_of_loops)]
-    number_of_loops - 10 in my_list
-                        </code></pre>
-                    <p>03 - Sets for membership checks/membershipChecksBad.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        my_list = [value for value in range(number_of_loops)]
+                        number_of_loops - 10 in my_list
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Good way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    my_set = {value for value in range(number_of_loops)}
-    number_of_loops - 10 in my_set
-                        </code></pre>
-                    <p>03 - Sets for membership checks/membershipChecksGood.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        my_set = {value for value in range(number_of_loops)}
+                        number_of_loops - 10 in my_set
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Results</h2>
@@ -328,18 +330,18 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>5.00679016113e-06</td>
-                            <td>0.0205149650574</td>
+                            <td>2.6226043701171875e-06</td>
+                            <td>0.00940704345703125</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>5.96046447754e-06</td>
-                            <td>0.0210719108582</td>
+                            <td>2.86102294921875e-06</td>
+                            <td>0.009442806243896484</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>5.00679016113e-06</td>
-                            <td>0.0188229084015</td>
+                            <td>2.6226043701171875e-06</td>
+                            <td>0.009402036666870117</td>
                         </tr>
                         </tbody>
                     </table>
