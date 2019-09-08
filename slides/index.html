@@ -188,32 +188,33 @@
                         <li>Generate sequences one item at a time</li>
                         <li>Performance when working with large data</li>
                         <li>Memory saver</li>
-                        <li>range python3</li>
                     </ul>
                 </section>
                 <section>
                     <h2>Bad way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    def generator():
-        return [x*2 for x in range(number_of_loops)]
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def generator():
+                            return [x*2 for x in range(number_of_loops)]
 
-    def generator_testing():
-        for loop_count in generator():
-            foo = loop_count + 3
-                        </code></pre>
-                    <p>02 - Generators/generatorsBad.py</p>
+                        def generator_testing():
+                            for loop_count in generator():
+                                foo = loop_count + 3
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Good way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    def generator():
-        return (x*2 for x in xrange(number_of_loops))
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def generator():
+                            return (x*2 for x in range(number_of_loops))
 
-    def generator_testing():
-        for loop_count in generator():
-            foo = loop_count + 3
-                        </code></pre>
-                    <p>02 - Generators/generatorsGood.py</p>
+                        def generator_testing():
+                            for loop_count in generator():
+                                foo = loop_count + 3
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Results time</h2>
@@ -229,18 +230,18 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>90.0547389984</td>
-                            <td>76.2436289787</td>
+                            <td>108.18889307975769</td>
+                            <td>99.93871140480042</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>80.1943080425</td>
-                            <td>91.3688008785</td>
+                            <td>105.67844486236572</td>
+                            <td>113.31267857551575</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>84.9249260426</td>
-                            <td>77.2983429432</td>
+                            <td>105.71193242073059</td>
+                            <td>105.03367567062378</td>
                         </tr>
                         </tbody>
                     </table>
@@ -259,31 +260,32 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>12.6 MiB</td>
-                            <td>67.1 MiB</td>
+                            <td>13.9 MiB</td>
+                            <td>52.8 MiB</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>12.7 MiB</td>
-                            <td>67.3 MiB</td>
+                            <td>14.0 MiB</td>
+                            <td>52.6 MiB</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>12.6 MiB</td>
-                            <td>67.3 MiB</td>
+                            <td>14.0 MiB</td>
+                            <td>52.8 MiB</td>
                         </tr>
                         </tbody>
                     </table>
                 </section>
                 <section>
                     <h2>Bonus - Your own generator</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    def my_generator(start_value):
-        while True:
-            yield start_value
-            start_value += 1
-                        </code></pre>
-                    <p>02 - Generators/generators.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def my_generator(start_value):
+                            while True:
+                                yield start_value
+                                start_value += 1
+                        </code>
+                    </pre>
                 </section>
             </section>
             <!-- Sets for membership checks -->
