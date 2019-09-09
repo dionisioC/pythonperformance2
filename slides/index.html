@@ -355,35 +355,38 @@
                     <ul>
                         <li>Strings are immutable</li>
                         <li>Don't concatenate a big amount of them</li>
-                        <li>Same issue as in Java (using + creates new objects)</li>
                     </ul>
                 </section>
                 <section>
                     <h2>Warm up</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    lis = list(ascii_lowercase)
-    my_config = config.get_config()
-    number_of_loops = my_config.getint("Global", "number_of_loops")
-    examples = [lis[int(random() * 26)] for _ in xrange(number_of_loops)]
-                        </code></pre>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                            lis = list(ascii_lowercase)
+                            my_config = config.get_config()
+                            number_of_loops = my_config.getint("Global", "number_of_loops")
+                            examples = [lis[int(random() * 26)] for _ in range(number_of_loops)]
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Bad way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    def string_joiner():
-        final_string = ''
-        for c in examples:
-            final_string += c
-                        </code></pre>
-                    <p>04 - Strings the right way/stringsBad.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def string_joiner():
+                            final_string = ''
+                            for c in examples:
+                                final_string += c
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Good way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    def string_joiner():
-        ''.join(examples)
-                        </code></pre>
-                    <p>04 - Strings the right way/stringsGood.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def string_joiner():
+                            ''.join(examples)
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Results</h2>
@@ -399,37 +402,42 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>0.0123269557953</td>
-                            <td>125.284370899</td>
+                            <td>0.018128633499145508</td>
+                            <td>136.8881275653839</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>0.0124909877777</td>
-                            <td>117.584208965</td>
+                            <td>0.018262863159179688</td>
+                            <td>142.51917815208435</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>0.0123250484467</td>
-                            <td>124.356750011</td>
+                            <td>0.018287181854248047</td>
+                            <td>143.60296201705933</td>
                         </tr>
                         </tbody>
                     </table>
                 </section>
                 <section>
                     <h2>Bonus</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    print ("Ms. %s! My %s crawled in my %s and then I %s it."
-           "Can I have another one?" % ("Hoover", "worm", "mouth", "ate"))
-                        </code></pre>
-                    <pre><code class="Python" data-trim contenteditable>
-    print ("Ms. {}! My {} crawled in my {} and then I {} it."
-           "Can I have another one?".format("Hoover", "worm", "mouth", "ate"))
-                        </code></pre>
-                    <pre><code class="Python" data-trim contenteditable>
-    print ("Ms. {0}! My {2} crawled in my {1} and then I {3} it."
-           "Can I have another one?".format("Hoover", "worm", "mouth", "ate"))
-                        </code></pre>
-                    <p>04 - Strings the right way/stringsBonus.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        print ("Ms. %s! My %s crawled in my %s and then I %s it."
+                               "Can I have another one?" % ("Hoover", "worm", "mouth", "ate"))
+                        </code>
+                    </pre>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        print ("Ms. {}! My {} crawled in my {} and then I {} it."
+                               "Can I have another one?".format("Hoover", "worm", "mouth", "ate"))
+                        </code>
+                    </pre>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        print ("Ms. {0}! My {2} crawled in my {1} and then I {3} it."
+                               "Can I have another one?".format("Hoover", "worm", "mouth", "ate"))
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Bonus</h2>
