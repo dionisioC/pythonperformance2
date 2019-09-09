@@ -459,24 +459,26 @@
                 </section>
                 <section>
                     <h2>Bad way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    def intermediate_testing():
-        for loop_count in range(number_of_loops):
-            print ('Hi')
-            print ('How')
-            print ('Are')
-            print ('You')
-                        </code></pre>
-                    <p>05 - Avoid intermediate outputs/intermediateBad.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def intermediate_testing():
+                            for loop_count in range(number_of_loops):
+                                print ('Hi')
+                                print ('How')
+                                print ('Are')
+                                print ('You')
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Good way</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    def intermediate_testing():
-        for loop_count in range(number_of_loops):
-            print ('Hi how are you')
-                        </code></pre>
-                    <p>05 - Avoid intermediate outputs/intermediateGood.py</p>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def intermediate_testing():
+                            for loop_count in range(number_of_loops):
+                                print ('Hi how are you')
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Results</h2>
@@ -492,37 +494,41 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>1.32236790657</td>
-                            <td>4.83762598038</td>
+                            <td>5.474729537963867</td>
+                            <td>18.25675320625305</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>1.45444393158</td>
-                            <td>5.39266395569</td>
+                            <td>5.410849571228027</td>
+                            <td>18.650113821029663</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>1.38991999626</td>
-                            <td>4.99856710434</td>
+                            <td>5.34160852432251</td>
+                            <td>17.74145531654358</td>
                         </tr>
                         </tbody>
                     </table>
                 </section>
                 <section>
                     <h2>Weird</h2>
-                    <pre><code class="Python" data-trim contenteditable>
-    def intermediate_no_print_testing():
-        for loop_count in range(number_of_loops):
-            foo = 20
-            foo += 20
-            foo += 20
-            foo += 20
-                        </code></pre>
-                    <pre><code class="Python" data-trim contenteditable>
-    def intermediate_no_print_testing():
-        for loop_count in range(number_of_loops):
-            foo = 20 + 20 + 20
-                        </code></pre>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def intermediate_no_print_testing():
+                            for loop_count in range(number_of_loops):
+                                foo = 20
+                                foo += 20
+                                foo += 20
+                                foo += 20
+                        </code>
+                    </pre>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def intermediate_no_print_testing():
+                            for loop_count in range(number_of_loops):
+                                foo = 20 + 20 + 20 + 20
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Results</h2>
@@ -538,18 +544,18 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>0.0615119934082</td>
-                            <td>0.141456842422</td>
+                            <td>0.06005716323852539</td>
+                            <td>0.15479803085327148</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>0.0611300468445</td>
-                            <td>0.140588998795</td>
+                            <td>0.058573007583618164</td>
+                            <td>0.13997697830200195</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>0.0617189407349</td>
-                            <td>0.143658161163</td>
+                            <td>0.051666975021362305</td>
+                            <td>0.15417098999023438</td>
                         </tr>
                         </tbody>
                     </table>
