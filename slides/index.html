@@ -73,6 +73,7 @@
                     <li><a href="#StringsRightWay">Strings the right way</a></li>
                     <li><a href="#AvoidIntermediateOutputs">Avoid intermediate outputs</a></li>
                     <li><a href="#Cache">Cache the most requested results</a></li>
+                    <li><a href="#RepeatVSRange">Repeat fater than range</a></li>
                 </ul>
             </section>
 
@@ -692,12 +693,73 @@
                     </table>
                 </section>
             </section>
+
+            <!-- Cache -->
+            <section id="RepeatVSRange">
+                <h1>repeat() vs range()</h1>
+                <section>
+                    <ul>
+                        <li>Thanks to Raymond Hettinger @raymondh</li>
+                        <li>itertools.repeat() is faster than range() for looping a fixed number of times when you don't need the loop variable.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Range</h2>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        for i in range(number_of_loops):
+                            pass
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Repeat</h2>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        for _ in itertools.repeat(None, number_of_loops):
+                            pass
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Results</h2>
+                    <p>10000 elements</p>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Execution</th>
+                            <th>Range</th>
+                            <th>Repeat</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>0.001062631607055664</td>
+                            <td>0.0006778240203857422</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>0.0010881423950195312</td>
+                            <td>0.0006797313690185547</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>0.0011472702026367188</td>
+                            <td>0.0007135868072509766</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+
+
             <!-- References -->
 
             <section><h1>References</h1>
                 <ul>
-                    <li><a href="https://www.packtpub.com/books/content/7-tips-python-performance">7 Tips For Python
-                        Performance</a></li>
+                    <li><a href="https://www.packtpub.com/books/content/7-tips-python-performance">7 Tips For Python Performance</a></li>
+                    <li><a href="https://twitter.com/raymondh/status/1144527183341375488">Raymond Hettinger tweet</a></li>
                 </ul>
             </section>
 
