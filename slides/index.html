@@ -74,6 +74,8 @@
                     <li><a href="#AvoidIntermediateOutputs">Avoid intermediate outputs</a></li>
                     <li><a href="#Cache">Cache the most requested results</a></li>
                     <li><a href="#RepeatVSRange">Repeat fater than range</a></li>
+                    <li><a href="#Slots">Slots</a></li>
+
                 </ul>
             </section>
 
@@ -101,7 +103,7 @@
                 <section>
                     <h2>Sets</h2>
                     <p>
-                        Unordered data structure that stotrd non duplicate elements.
+                        Unordered data structure that stores non duplicate elements.
                     </p>
                 </section>
                 <section>
@@ -694,7 +696,7 @@
                 </section>
             </section>
 
-            <!-- Cache -->
+            <!-- Repeat VS Range -->
             <section id="RepeatVSRange">
                 <h1>repeat() vs range()</h1>
                 <section>
@@ -754,12 +756,108 @@
             </section>
 
 
+            <!--Slots -->
+            <section id="Slots">
+                <h1>Slots</h1>
+                <section>
+                    <ul>
+                        <li>__slots__ is an attribute you can add to a Python class when defining it. You define slots with the possible attributes that an instance of an object can possess.</li>
+                        <li>Provides faster attribute getting and setting due to data structure optimization and reduced memory usage for class instances</li>
+                        <li>Using them makes imposible chage the attributes on run time </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Slots</h2>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                            class Slots:
+                                __slots__ = ('x', 'y', 'z')
+
+                                def __init__(self, x, y, z):
+                                    self.x, self.y, self.z = x, y, z
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>No Slots</h2>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                            class NoSlots:
+
+                                def __init__(self, x, y, z):
+                                    self.x, self.y, self.z = x, y, z
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Results</h2>
+                    <p>10000 elements</p>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Execution</th>
+                            <th>Slots</th>
+                            <th>NoSlots</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>2.5621020793914795</td>
+                            <td>2.580631732940674</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>2.5337283611297607</td>
+                            <td>2.5645253658294678</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>2.544905424118042</td>
+                            <td>2.569990634918213</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h2>Results</h2>
+                    <p>10000 elements</p>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Execution</th>
+                            <th>Slots</th>
+                            <th>NoSlots</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>15.7 MiB</td>
+                            <td>16.9 MiB</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>15.7 MiB</td>
+                            <td>16.9 MiB</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>15.7 MiB</td>
+                            <td>16.9 MiB</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+
             <!-- References -->
 
             <section><h1>References</h1>
                 <ul>
                     <li><a href="https://www.packtpub.com/books/content/7-tips-python-performance">7 Tips For Python Performance</a></li>
                     <li><a href="https://twitter.com/raymondh/status/1144527183341375488">Raymond Hettinger tweet</a></li>
+                    <li><a href="https://tech.oyster.com/save-ram-with-python-slots/">Save ram with python slots</a></li>
                 </ul>
             </section>
 
