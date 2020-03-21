@@ -1,1 +1,1 @@
-memory-profiler==0.55.0
+memory-profiler==0.57.0

@@ -10,18 +10,8 @@ inside the slides folder and `npm start` to run the server. Slides will be avail
 
 It is recommended use a virtual environment. pyenv help us to achieve it
 
-pyenv virtualenv 3.7.4 performance
-pyenv shell performance
-pip install -r requirements.txt
-
-
-# Comprehensions
-
-In order to execute the files, we have to type:
 ```
-python comprehensionsBad.py  
-python comprehensionsGood.py
-```   
-
-# Generators
-
+pyenv virtualenv 3.8.2 performance3_8_2
+pyenv shell performance3_8_2
+pip install -r requirements.txt
+```
