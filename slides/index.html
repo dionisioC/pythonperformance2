@@ -71,6 +71,7 @@
                     <li><a href="#Generators">Generators</a></li>
                     <li><a href="#SetMembershipCheck">Sets for membership checks</a></li>
                     <li><a href="#StringsRightWay">Strings the right way</a></li>
+                    <li><a href="#FormatStrings">Strings formating</a></li>
                     <li><a href="#AvoidIntermediateOutputs">Avoid intermediate outputs</a></li>
                     <li><a href="#Cache">Cache the most requested results</a></li>
                     <li><a href="#RepeatVSRange">Repeat faster than range</a></li>
@@ -365,9 +366,7 @@
                     <pre>
                         <code class="Python" data-trim contenteditable>
                             lis = list(ascii_lowercase)
-                            my_config = config.get_config()
-                            number_of_loops = my_config.getint("Global", "number_of_loops")
-                            examples = [lis[int(random() * 26)] for _ in range(number_of_loops)]
+                            examples = [lis[int(random() * 26)] for _ in itertools.repeat(None, NUMBER_OF_ELEMENTS)]
                         </code>
                     </pre>
                 </section>
@@ -393,7 +392,7 @@
                 </section>
                 <section>
                     <h2>Results</h2>
-                    <p>1000000 elements</p>
+                    <p>1000000 elements 100 times</p>
                     <table>
                         <thead>
                         <tr>
@@ -405,48 +404,107 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>0.018128633499145508</td>
-                            <td>136.8881275653839</td>
+                            <td>0.80223171800025738776</td>
+                            <td>7.63557597099861595780</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>0.018262863159179688</td>
-                            <td>142.51917815208435</td>
+                            <td>0.66454874399641994387</td>
+                            <td>7.96551577700302004814</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>0.018287181854248047</td>
-                            <td>143.60296201705933</td>
+                            <td>0.74826748399937059730</td>
+                            <td>8.09755125200172187760</td>
                         </tr>
                         </tbody>
                     </table>
                 </section>
+            </section>
+
+
+           <!-- Format Strings -->
+            <section id="FormatStrings"><h1>String formatting</h1>
                 <section>
-                    <h2>Bonus</h2>
+                    <ul>
+                        <li>C-style</li>
+                        <li>Format</li>
+                        <li>F-strings (since python 3.6)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>C-style</h2>
                     <pre>
                         <code class="Python" data-trim contenteditable>
-                        print ("Ms. %s! My %s crawled in my %s and then I %s it."
-                               "Can I have another one?" % ("Hoover", "worm", "mouth", "ate"))
-                        </code>
-                    </pre>
-                    <pre>
-                        <code class="Python" data-trim contenteditable>
-                        print ("Ms. {}! My {} crawled in my {} and then I {} it."
-                               "Can I have another one?".format("Hoover", "worm", "mouth", "ate"))
-                        </code>
-                    </pre>
-                    <pre>
-                        <code class="Python" data-trim contenteditable>
-                        print ("Ms. {0}! My {2} crawled in my {1} and then I {3} it."
-                               "Can I have another one?".format("Hoover", "worm", "mouth", "ate"))
+                        def c_style(a, b, c, d):
+                            return "Ms. %s! My %s crawled in my %s and then I %s it. Can I have another one?" % (a, b, c, d)
                         </code>
                     </pre>
                 </section>
                 <section>
-                    <h2>Bonus</h2>
-                    <p>Ms. Hoover! My worm crawled in my mouth and then I ate it.Can I have another one?</p>
-                    <p>Ms. Hoover! My worm crawled in my mouth and then I ate it.Can I have another one?</p>
-                    <p>Ms. Hoover! My mouth crawled in my worm and then I ate it.Can I have another one?</p>
+                    <h2>Format</h2>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def format_string(a, b, c, d):
+                            return "Ms. {}! My {} crawled in my {} and then I {} it. Can I have another one?".format(a, b, c, d)
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Format positions</h2>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def format_string_position(a, b, c, d):
+                            return "Ms. {0}! My {2} crawled in my {1} and then I {3} it. Can I have another one?".format(a, b, c, d)
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>F-String</h2>
+                    <pre>
+                        <code class="Python" data-trim contenteditable>
+                        def f_string(a, b, c, d):
+                            return f"Ms. {a}! My {b} crawled in my {c} and then I {d} it. Can I have another one?"
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Results</h2>
+                    <p>1000000 iterations</p>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Execution</th>
+                            <th>C-style</th>
+                            <th>Format</th>
+                            <th>Format position</th>
+                            <th>F-string</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>0.46259</td>
+                            <td>0.58916</td>
+                            <td>0.63243</td>
+                            <td>0.28413</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>0.47330</td>
+                            <td>0.59852</td>
+                            <td>0.65713</td>
+                            <td>0.28615</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>0.48110</td>
+                            <td>0.60279</td>
+                            <td>0.64672</td>
+                            <td>0.28645</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </section>
             </section>
 
