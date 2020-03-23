@@ -639,12 +639,12 @@
                     <h2>Bad way</h2>
                     <pre>
                         <code class="Python" data-trim contenteditable>
-                            def expensive_function(value):
-                                return value * 2
+                        def expensive_function(value):
+                            time.sleep(value / (NUMBER_OF_ELEMENTS * NUMBER_OF_ELEMENTS))
 
-                            def cache_testing():
-                                for loop_count in range(number_of_loops):
-                                    expensive_function(loop_count % 8)
+                        def bad_cache_testing(number_of_loops):
+                            for loop_count in range(number_of_loops):
+                                expensive_function(loop_count % 2)
                         </code>
                     </pre>
                 </section>
@@ -652,13 +652,13 @@
                     <h2>Good way</h2>
                     <pre>
                         <code class="Python" data-trim contenteditable>
-                        @lru_cache(maxsize=cache_size)
-                        def expensive_function(value):
-                            return value * 2
+                        @lru_cache(maxsize=8)
+                        def cached_expensive_function(value):
+                            time.sleep(value / (NUMBER_OF_ELEMENTS * NUMBER_OF_ELEMENTS))
 
-                        def cache_testing():
+                        def good_cache_testing(number_of_loops):
                             for loop_count in range(number_of_loops):
-                                expensive_function(loop_count % 8)
+                                cached_expensive_function(loop_count % 2)
                         </code>
                     </pre>
                 </section>
@@ -676,34 +676,36 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>0.004194021224975586</td>
-                            <td>0.004076480865478516</td>
+                            <td>0.01419296399399172515</td>
+                            <td>3.38171269500162452459</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>0.0055828094482421875</td>
-                            <td>0.004128932952880859</td>
+                            <td>0.03052311800274765119</td>
+                            <td>3.45804396000312408432</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>0.005145549774169922</td>
-                            <td>0.004878044128417969</td>
+                            <td>0.03121864800050389022</td>
+                            <td>3.44148204400698887184</td>
                         </tr>
                         </tbody>
                     </table>
                 </section>
                 <section>
+                    If the function is not expensive ...
+                </section>
+                <section>
                     <h2>Bad way</h2>
                     <pre>
                         <code class="Python" data-trim contenteditable>
-                        def expensive_function(value):
-                            time.sleep(0.0005)
-                            return value * 2
 
+                        def non_expensive_function(value):
+                            return value + 1
 
-                        def cache_testing():
+                        def bad_cache_testing_non_expensive(number_of_loops):
                             for loop_count in range(number_of_loops):
-                                expensive_function(loop_count % 8)
+                                non_expensive_function(loop_count % 2)
                         </code>
                     </pre>
                 </section>
@@ -711,20 +713,20 @@
                     <h2>Good way</h2>
                     <pre>
                         <code class="Python" data-trim contenteditable>
-                        @lru_cache(maxsize=cache_size)
-                        def expensive_function(value):
-                            time.sleep(0.0005)
-                            return value * 2
+                        @lru_cache(maxsize=8)
+                        def cached_non_expensive_function(value):
+                            return value + 1
 
-                        def cache_testing():
+
+                        def good_cache_testing_non_expensive(number_of_loops):
                             for loop_count in range(number_of_loops):
-                                expensive_function(loop_count % 8)
+                                cached_non_expensive_function(loop_count % 2)
                         </code>
                     </pre>
                 </section>
                 <section>
                     <h2>Results</h2>
-                    <p>10000 elements</p>
+                    <p>10000 elements 100 times</p>
                     <table>
                         <thead>
                         <tr>
@@ -736,18 +738,18 @@
                         <tbody>
                         <tr>
                             <td>1</td>
-                            <td>0.009487152099609375</td>
-                            <td>6.637448787689209</td>
+                            <td>0.02496753699961118400</td>
+                            <td>0.01382279099925654009</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>0.009709596633911133</td>
-                            <td>6.640117168426514</td>
+                            <td>0.03057814600470010191</td>
+                            <td>0.01395637800305848941</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>0.010263681411743164</td>
-                            <td>6.637411594390869</td>
+                            <td>0.01116664300207048655</td>
+                            <td>0.01298988499911502004</td>
                         </tr>
                         </tbody>
                     </table>
