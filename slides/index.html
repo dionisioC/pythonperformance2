@@ -6,164 +6,155 @@
 
 		<title>reveal.js</title>
 
-		<link rel="stylesheet" href="css/reset.css">
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/monokai.css">
-
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
 	</head>
 	<body>
-    <div class="reveal">
-        <div class="slides">
+		<div class="reveal">
+			<div class="slides">
 
-            <!-- Intro -->
+				<!-- Intro -->
 
-            <section><h1>Tips For Python Performance</h1>
-                <h3>Dionisio Cortés Fernández</h3>
-                <p>
-                    <small>cortesfernandezdionisio@gmail.com</small>
-                </p>
-            </section>
+				<section><h1>Tips For Python Performance</h1>
+					<h3>Dionisio Cortés Fernández</h3>
+					<p>
+						<small>cortesfernandezdionisio@gmail.com</small>
+					</p>
+				</section>
 
 
-            <section><h1>Remember</h1>
-                <section>
-                <img src="./images/Quotefancy-2035696-3840x2160.jpg"/>
-                </section>
-                <section>
-                    <p>
-                        Donald Ervin Knuth is an American computer scientist, mathematician, and professor emeritus at Stanford University. He is the 1974 recipient of the ACM Turing Award, informally considered the Nobel Prize of computer science. He is the author of the multi-volume work The Art of Computer Programming.
-                    </p>
-                </section>
-            </section>
+				<section><h1>Remember</h1>
+					<section>
+						<img src="./images/Quotefancy-2035696-3840x2160.jpg"/>
+					</section>
+					<section>
+						<p>
+							Donald Ervin Knuth is an American computer scientist, mathematician, and professor emeritus at Stanford University. He is the 1974 recipient of the ACM Turing Award, informally considered the Nobel Prize of computer science. He is the author of the multi-volume work The Art of Computer Programming.
+						</p>
+					</section>
+				</section>
 
-            <section><h1>Disclaimer</h1>
-                <ul>
-                    <li>Toy examples naively tested</li>
-                    <li>Heavily influenced by the links in the references</li>
-                    <li>In case of doubt try it yourself</li>
-                </ul>
-            </section>
+				<section><h1>Disclaimer</h1>
+					<ul>
+						<li>Toy examples naively tested</li>
+						<li>Heavily influenced by the links in the references</li>
+						<li>In case of doubt try it yourself</li>
+					</ul>
+				</section>
 
-            <section><h1>Test setup</h1>
-                <ul>
-                    <li>Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz</li>
-                    <li>Linux dio 5.3.0-42-generic #34~18.04.1-Ubuntu SMP Fri Feb 28 13:42:26 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</li>
-                    <li>Python 3.8.2</li>
-                </ul>
-            </section>
+				<section><h1>Test setup</h1>
+					<ul>
+						<li>Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz</li>
+						<li>Linux dio 5.3.0-42-generic #34~18.04.1-Ubuntu SMP Fri Feb 28 13:42:26 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</li>
+						<li>Python 3.8.2</li>
+					</ul>
+				</section>
 
-            <!-- Index -->
+				<!-- Index -->
 
-            <section><h1>Index</h1>
-                <ul>
-                    <li><a href="#Comprehensions">Comprehensions</a></li>
-                    <li><a href="#Generators">Generators</a></li>
-                    <li><a href="#SetMembershipCheck">Sets for membership checks</a></li>
-                    <li><a href="#StringsRightWay">Strings the right way</a></li>
-                    <li><a href="#FormatStrings">Strings formating</a></li>
-                    <li><a href="#AvoidIntermediateOutputs">Avoid intermediate outputs</a></li>
-                    <li><a href="#Cache">Cache the most requested results</a></li>
-                    <li><a href="#RepeatVSRange">Repeat faster than range</a></li>
-                    <li><a href="#Slots">Slots</a></li>
+				<section><h1>Index</h1>
+					<ul>
+						<li><a href="#Comprehensions">Comprehensions</a></li>
+						<li><a href="#Generators">Generators</a></li>
+						<li><a href="#SetMembershipCheck">Sets for membership checks</a></li>
+						<li><a href="#StringsRightWay">Strings the right way</a></li>
+						<li><a href="#FormatStrings">Strings formating</a></li>
+						<li><a href="#AvoidIntermediateOutputs">Avoid intermediate outputs</a></li>
+						<li><a href="#Cache">Cache the most requested results</a></li>
+						<li><a href="#RepeatVSRange">Repeat faster than range</a></li>
+						<li><a href="#Slots">Slots</a></li>
 
-                </ul>
-            </section>
+					</ul>
+				</section>
 
-            <!-- Comprehensions -->
-            <section id="Comprehensions"><h1>Comprehensions</h1>
-                <section>
-                    <ul>
-                        <li>Construct lists, sets, dicts in a very natural, easy way, like a mathematician is used to do</li>
-                        <li>No more Java style</li>
-                        <li>Comprehensions perform better</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Lists</h2>
-                    <p>
-                        Data structure that stores an ordered collection of items.
-                    </p>
-                </section>
-                <section>
-                    <h2>Tuples</h2>
-                    <p>
-                        Non mutable data structure that stores an ordered collection of items.
-                    </p>
-                </section>
-                <section>
-                    <h2>Sets</h2>
-                    <p>
-                        Unordered data structure that stores non duplicate elements.
-                    </p>
-                </section>
-                <section>
-                    <h2>Dictionaries</h2>
-                    <p>
-                        Data structure that stores data in the form of key-value pairs. The keys defined for a dictionary need to be unique and inmutable.
-                    </p>
-                </section>
-                <section>
-                    <h2>Bad way</h2>
-                    <pre>
+				<!-- Comprehensions -->
+				<section id="Comprehensions"><h1>Comprehensions</h1>
+					<section>
+						<ul>
+							<li>Construct lists, sets, dicts in a very natural, easy way, like a mathematician is used to do</li>
+							<li>No more Java style</li>
+							<li>Comprehensions perform better</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Lists</h2>
+						<p>
+							Data structure that stores an ordered collection of items.
+						</p>
+					</section>
+					<section>
+						<h2>Tuples</h2>
+						<p>
+							Non mutable data structure that stores an ordered collection of items.
+						</p>
+					</section>
+					<section>
+						<h2>Sets</h2>
+						<p>
+							Unordered data structure that stores non duplicate elements.
+						</p>
+					</section>
+					<section>
+						<h2>Dictionaries</h2>
+						<p>
+							Data structure that stores data in the form of key-value pairs. The keys defined for a dictionary need to be unique and inmutable.
+						</p>
+					</section>
+					<section>
+						<h2>Bad way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         my_list = []
                         for value in range(number_of_loops):
                             my_list.append(value)
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Good way</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Good way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         my_list = [value for value in range(number_of_loops)]
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>1000000 elements 100 times</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Good</th>
-                            <th>Bad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>4.59093912300159</td>
-                            <td>8.143455826000718</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>4.8011583119987336</td>
-                            <td>8.315980260998913</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>4.879687515000114</td>
-                            <td>8.516897788998904</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <section>
-                    <h2>Bonus - validation</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>1000000 elements 100 times</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Good</th>
+								<th>Bad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>4.59093912300159</td>
+								<td>8.143455826000718</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>4.8011583119987336</td>
+								<td>8.315980260998913</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>4.879687515000114</td>
+								<td>8.516897788998904</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+					<section>
+						<h2>Bonus - validation</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def modulus_validation(value):
                             return value % 2 == 0
@@ -172,31 +163,31 @@
                                    if modulus_validation(value)]
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Bonus - tuples, sets, dicts</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Bonus - tuples, sets, dicts</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         my_tuple = tuple(value for value in range(number_of_loops))
                         my_set = {value for value in range(number_of_loops)}
                         my_dict = {value: value for value in range(number_of_loops)}
                         </code>
                     </pre>
-                </section>
-            </section>
+					</section>
+				</section>
 
-            <!-- Generators -->
-            <section id="Generators"><h1>Generators</h1>
-                <section>
-                    <ul>
-                        <li>Generate sequences one item at a time</li>
-                        <li>Performance when working with large data</li>
-                        <li>Memory saver</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Bad way</h2>
-                    <pre>
+				<!-- Generators -->
+				<section id="Generators"><h1>Generators</h1>
+					<section>
+						<ul>
+							<li>Generate sequences one item at a time</li>
+							<li>Performance when working with large data</li>
+							<li>Memory saver</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Bad way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def generator():
                             return [x*2 for x in range(number_of_loops)]
@@ -206,10 +197,10 @@
                                 foo = loop_count + 3
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Good way</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Good way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def generator():
                             return (x*2 for x in range(number_of_loops))
@@ -219,70 +210,70 @@
                                 foo = loop_count + 3
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results time</h2>
-                    <p>100000 elements 100 times</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Good</th>
-                            <th>Bad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0.00007136500062188134</td>
-                            <td>0.73487311499775387347</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0.00006704999395878986</td>
-                            <td>0.78135660300176823512</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>0.00006757699884474277</td>
-                            <td>0.78059898499486735091</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <section>
-                    <h2>Results max memory</h2>
-                    <p>100000 elements</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Good</th>
-                            <th>Bad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>14.8 MiB</td>
-                            <td>17.9 MiB</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>15.1 MiB</td>
-                            <td>17.9 MiB </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>15.1 MiB</td>
-                            <td>17.9 MiB</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <section>
-                    <h2>Bonus - Your own generator</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Results time</h2>
+						<p>100000 elements 100 times</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Good</th>
+								<th>Bad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>0.00007136500062188134</td>
+								<td>0.73487311499775387347</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>0.00006704999395878986</td>
+								<td>0.78135660300176823512</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>0.00006757699884474277</td>
+								<td>0.78059898499486735091</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+					<section>
+						<h2>Results max memory</h2>
+						<p>100000 elements</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Good</th>
+								<th>Bad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>14.8 MiB</td>
+								<td>17.9 MiB</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>15.1 MiB</td>
+								<td>17.9 MiB </td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>15.1 MiB</td>
+								<td>17.9 MiB</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+					<section>
+						<h2>Bonus - Your own generator</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def my_generator(start_value):
                             while True:
@@ -290,89 +281,89 @@
                                 start_value += 1
                         </code>
                     </pre>
-                </section>
-            </section>
-            <!-- Sets for membership checks -->
-            <section id="SetMembershipCheck"><h1>sets in check</h1>
-                <section>
-                    <ul>
-                        <li>Item's positions are calculated rather than searched (O(1))</li>
-                        <li>Inside a list, the interpreter searches the entire list</li>
-                        <li>Unordered collections of <strong>unique</strong> elements
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Bad way</h2>
-                    <pre>
+					</section>
+				</section>
+				<!-- Sets for membership checks -->
+				<section id="SetMembershipCheck"><h1>sets in check</h1>
+					<section>
+						<ul>
+							<li>Item's positions are calculated rather than searched (O(1))</li>
+							<li>Inside a list, the interpreter searches the entire list</li>
+							<li>Unordered collections of <strong>unique</strong> elements
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Bad way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         my_list = [value for value in range(number_of_loops)]
                         number_of_loops - 10 in my_list
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Good way</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Good way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         my_set = {value for value in range(number_of_loops)}
                         number_of_loops - 10 in my_set
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>1000000 elements 100 times</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Good</th>
-                            <th>Bad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0.00002259300526930019</td>
-                            <td>1.35211111600074218586</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0.00002240200410597026</td>
-                            <td>1.32580057100130943581</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>0.00002333900192752481</td>
-                            <td>1.33889542100223479792</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-            </section>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>1000000 elements 100 times</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Good</th>
+								<th>Bad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>0.00002259300526930019</td>
+								<td>1.35211111600074218586</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>0.00002240200410597026</td>
+								<td>1.32580057100130943581</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>0.00002333900192752481</td>
+								<td>1.33889542100223479792</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+				</section>
 
 
-            <!-- Strings -->
-            <section id="StringsRightWay"><h1>Strings</h1>
-                <section>
-                    <ul>
-                        <li>Strings are immutable</li>
-                        <li>Don't concatenate a big amount of them</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Warm up</h2>
-                    <pre>
+				<!-- Strings -->
+				<section id="StringsRightWay"><h1>Strings</h1>
+					<section>
+						<ul>
+							<li>Strings are immutable</li>
+							<li>Don't concatenate a big amount of them</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Warm up</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                             lis = list(ascii_lowercase)
                             examples = [lis[int(random() * 26)] for _ in itertools.repeat(None, NUMBER_OF_ELEMENTS)]
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Bad way</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Bad way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def string_joiner():
                             final_string = ''
@@ -380,147 +371,147 @@
                                 final_string += c
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Good way</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Good way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def string_joiner():
                             ''.join(examples)
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>1000000 elements 100 times</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Good</th>
-                            <th>Bad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0.80223171800025738776</td>
-                            <td>7.63557597099861595780</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0.66454874399641994387</td>
-                            <td>7.96551577700302004814</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>0.74826748399937059730</td>
-                            <td>8.09755125200172187760</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-            </section>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>1000000 elements 100 times</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Good</th>
+								<th>Bad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>0.80223171800025738776</td>
+								<td>7.63557597099861595780</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>0.66454874399641994387</td>
+								<td>7.96551577700302004814</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>0.74826748399937059730</td>
+								<td>8.09755125200172187760</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+				</section>
 
 
-           <!-- Format Strings -->
-            <section id="FormatStrings"><h1>String formatting</h1>
-                <section>
-                    <ul>
-                        <li>C-style</li>
-                        <li>Format</li>
-                        <li>F-strings (since python 3.6)</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>C-style</h2>
-                    <pre>
+				<!-- Format Strings -->
+				<section id="FormatStrings"><h1>String formatting</h1>
+					<section>
+						<ul>
+							<li>C-style</li>
+							<li>Format</li>
+							<li>F-strings (since python 3.6)</li>
+						</ul>
+					</section>
+					<section>
+						<h2>C-style</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def c_style(a, b, c, d):
                             return "Ms. %s! My %s crawled in my %s and then I %s it. Can I have another one?" % (a, b, c, d)
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Format</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Format</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def format_string(a, b, c, d):
                             return "Ms. {}! My {} crawled in my {} and then I {} it. Can I have another one?".format(a, b, c, d)
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Format positions</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Format positions</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def format_string_position(a, b, c, d):
                             return "Ms. {0}! My {2} crawled in my {1} and then I {3} it. Can I have another one?".format(a, b, c, d)
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>F-String</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>F-String</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def f_string(a, b, c, d):
                             return f"Ms. {a}! My {b} crawled in my {c} and then I {d} it. Can I have another one?"
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>1000000 iterations</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>C-style</th>
-                            <th>Format</th>
-                            <th>Format position</th>
-                            <th>F-string</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0.46259</td>
-                            <td>0.58916</td>
-                            <td>0.63243</td>
-                            <td>0.28413</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0.47330</td>
-                            <td>0.59852</td>
-                            <td>0.65713</td>
-                            <td>0.28615</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>0.48110</td>
-                            <td>0.60279</td>
-                            <td>0.64672</td>
-                            <td>0.28645</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-            </section>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>1000000 iterations</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>C-style</th>
+								<th>Format</th>
+								<th>Format position</th>
+								<th>F-string</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>0.46259</td>
+								<td>0.58916</td>
+								<td>0.63243</td>
+								<td>0.28413</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>0.47330</td>
+								<td>0.59852</td>
+								<td>0.65713</td>
+								<td>0.28615</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>0.48110</td>
+								<td>0.60279</td>
+								<td>0.64672</td>
+								<td>0.28645</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+				</section>
 
 
-            <!-- Intermediate output -->
-            <section id="AvoidIntermediateOutputs"><h1>No mid out</h1>
-                <section>
-                    <ul>
-                        <li>Avoid I/O when possible</li>
-                        <li>Print synchronous</li>
-                        <li>OS issue not python specific</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Bad way</h2>
-                    <pre>
+				<!-- Intermediate output -->
+				<section id="AvoidIntermediateOutputs"><h1>No mid out</h1>
+					<section>
+						<ul>
+							<li>Avoid I/O when possible</li>
+							<li>Print synchronous</li>
+							<li>OS issue not python specific</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Bad way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def intermediate_testing():
                             for loop_count in range(number_of_loops):
@@ -530,50 +521,50 @@
                                 print ('You')
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Good way</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Good way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def intermediate_testing():
                             for loop_count in range(number_of_loops):
                                 print ('Hi how are you')
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>1000 elements 100 times</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Good</th>
-                            <th>Bad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0.25645959700341336429</td>
-                            <td>1.21774623300007078797</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0.31354732700128806755</td>
-                            <td>1.19317356900137383491</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>0.28303264900023350492</td>
-                            <td>1.19775679000304080546</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <section>
-                    <h2>Weird</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>1000 elements 100 times</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Good</th>
+								<th>Bad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>0.25645959700341336429</td>
+								<td>1.21774623300007078797</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>0.31354732700128806755</td>
+								<td>1.19317356900137383491</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>0.28303264900023350492</td>
+								<td>1.19775679000304080546</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+					<section>
+						<h2>Weird</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def intermediate_no_print_testing():
                             for loop_count in range(number_of_loops):
@@ -583,61 +574,61 @@
                                 foo += 20
                         </code>
                     </pre>
-                    <pre>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def intermediate_no_print_testing():
                             for loop_count in range(number_of_loops):
                                 foo = 20 + 20 + 20 + 20
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>1000000 elements</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Good</th>
-                            <th>Bad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0.00134055600210558623</td>
-                            <td>0.00921671200194396079</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0.00171371600299607962</td>
-                            <td>0.01043715400010114536</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>0.00144171599822584540</td>
-                            <td>0.00964901599945733324</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>1000000 elements</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Good</th>
+								<th>Bad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>0.00134055600210558623</td>
+								<td>0.00921671200194396079</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>0.00171371600299607962</td>
+								<td>0.01043715400010114536</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>0.00144171599822584540</td>
+								<td>0.00964901599945733324</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
 
-            </section>
+				</section>
 
-            <!-- Cache -->
-            <section id="Cache">
-                <h1>Cache</h1>
-                <section>
-                    <ul>
-                        <li>Keep the most used values</li>
-                        <li>Avoid calculus or data access</li>
-                        <li>Not costless</li>
-                        <li>python3 built in</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Bad way</h2>
-                    <pre>
+				<!-- Cache -->
+				<section id="Cache">
+					<h1>Cache</h1>
+					<section>
+						<ul>
+							<li>Keep the most used values</li>
+							<li>Avoid calculus or data access</li>
+							<li>Not costless</li>
+							<li>python3 built in</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Bad way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         def expensive_function(value):
                             time.sleep(value / (NUMBER_OF_ELEMENTS * NUMBER_OF_ELEMENTS))
@@ -647,10 +638,10 @@
                                 expensive_function(loop_count % 2)
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Good way</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Good way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         @lru_cache(maxsize=8)
                         def cached_expensive_function(value):
@@ -661,43 +652,43 @@
                                 cached_expensive_function(loop_count % 2)
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>10000 elements</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Good</th>
-                            <th>Bad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0.01419296399399172515</td>
-                            <td>3.38171269500162452459</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0.03052311800274765119</td>
-                            <td>3.45804396000312408432</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>0.03121864800050389022</td>
-                            <td>3.44148204400698887184</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <section>
-                    If the function is not expensive ...
-                </section>
-                <section>
-                    <h2>Bad way</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>10000 elements</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Good</th>
+								<th>Bad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>0.01419296399399172515</td>
+								<td>3.38171269500162452459</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>0.03052311800274765119</td>
+								<td>3.45804396000312408432</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>0.03121864800050389022</td>
+								<td>3.44148204400698887184</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+					<section>
+						If the function is not expensive ...
+					</section>
+					<section>
+						<h2>Bad way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
 
                         def non_expensive_function(value):
@@ -708,10 +699,10 @@
                                 non_expensive_function(loop_count % 2)
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Good way</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Good way</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         @lru_cache(maxsize=8)
                         def cached_non_expensive_function(value):
@@ -723,112 +714,112 @@
                                 cached_non_expensive_function(loop_count % 2)
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>10000 elements 100 times</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Good</th>
-                            <th>Bad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0.02496753699961118400</td>
-                            <td>0.01382279099925654009</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0.03057814600470010191</td>
-                            <td>0.01395637800305848941</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>0.01116664300207048655</td>
-                            <td>0.01298988499911502004</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-            </section>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>10000 elements 100 times</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Good</th>
+								<th>Bad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>0.02496753699961118400</td>
+								<td>0.01382279099925654009</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>0.03057814600470010191</td>
+								<td>0.01395637800305848941</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>0.01116664300207048655</td>
+								<td>0.01298988499911502004</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+				</section>
 
-            <!-- Repeat VS Range -->
-            <section id="RepeatVSRange">
-                <h1>repeat() vs range()</h1>
-                <section>
-                    <ul>
-                        <li>Thanks to Raymond Hettinger @raymondh</li>
-                        <li>itertools.repeat() is faster than range() for looping a fixed number of times when you don't need the loop variable.</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Range</h2>
-                    <pre>
+				<!-- Repeat VS Range -->
+				<section id="RepeatVSRange">
+					<h1>repeat() vs range()</h1>
+					<section>
+						<ul>
+							<li>Thanks to Raymond Hettinger @raymondh</li>
+							<li>itertools.repeat() is faster than range() for looping a fixed number of times when you don't need the loop variable.</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Range</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         for i in range(number_of_loops):
                             pass
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Repeat</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>Repeat</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                         for _ in itertools.repeat(None, number_of_loops):
                             pass
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>100000 elements 100 times</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Itertools repeat</th>
-                            <th>Range</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0.07015533499361481518</td>
-                            <td>0.22255428100470453501</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0.08758715000294614583</td>
-                            <td>0.25886086199898272753</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>0.07864977700228337198</td>
-                            <td>0.21787663800932932645</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-            </section>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>100000 elements 100 times</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Itertools repeat</th>
+								<th>Range</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>0.07015533499361481518</td>
+								<td>0.22255428100470453501</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>0.08758715000294614583</td>
+								<td>0.25886086199898272753</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>0.07864977700228337198</td>
+								<td>0.21787663800932932645</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+				</section>
 
 
-            <!--Slots -->
-            <section id="Slots">
-                <h1>Slots</h1>
-                <section>
-                    <ul>
-                        <li>__slots__ is an attribute you can add to a Python class when defining it. You define slots with the possible attributes that an instance of an object can possess.</li>
-                        <li>Provides faster attribute getting and setting due to data structure optimization and reduced memory usage for class instances</li>
-                        <li>Using them makes impossible to change the attributes on run time </li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Slots</h2>
-                    <pre>
+				<!--Slots -->
+				<section id="Slots">
+					<h1>Slots</h1>
+					<section>
+						<ul>
+							<li>__slots__ is an attribute you can add to a Python class when defining it. You define slots with the possible attributes that an instance of an object can possess.</li>
+							<li>Provides faster attribute getting and setting due to data structure optimization and reduced memory usage for class instances</li>
+							<li>Using them makes impossible to change the attributes on run time </li>
+						</ul>
+					</section>
+					<section>
+						<h2>Slots</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                             class Slots:
                                 __slots__ = ('x', 'y', 'z')
@@ -837,10 +828,10 @@
                                     self.x, self.y, self.z = x, y, z
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>No Slots</h2>
-                    <pre>
+					</section>
+					<section>
+						<h2>No Slots</h2>
+						<pre>
                         <code class="Python" data-trim contenteditable>
                             class NoSlots:
 
@@ -848,96 +839,95 @@
                                     self.x, self.y, self.z = x, y, z
                         </code>
                     </pre>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>100000 elements</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Slots</th>
-                            <th>NoSlots</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>18.52261703599651809782</td>
-                            <td>20.02937265099899377674</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>20.30710838698723819107</td>
-                            <td>20.14936627399583812803</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>19.39120069799537304789</td>
-                            <td>18.79476003900344949216</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <section>
-                    <h2>Results</h2>
-                    <p>100000 elements</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Execution</th>
-                            <th>Slots</th>
-                            <th>NoSlots</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>30.3 MiB</td>
-                            <td>39.6 MiB</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>30.1 MiB</td>
-                            <td>39.6 MiB</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>30.1 MiB</td>
-                            <td>39.6 MiB</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-            </section>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>100000 elements</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Slots</th>
+								<th>NoSlots</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>18.52261703599651809782</td>
+								<td>20.02937265099899377674</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>20.30710838698723819107</td>
+								<td>20.14936627399583812803</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>19.39120069799537304789</td>
+								<td>18.79476003900344949216</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>100000 elements</p>
+						<table>
+							<thead>
+							<tr>
+								<th>Execution</th>
+								<th>Slots</th>
+								<th>NoSlots</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1</td>
+								<td>30.3 MiB</td>
+								<td>39.6 MiB</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>30.1 MiB</td>
+								<td>39.6 MiB</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>30.1 MiB</td>
+								<td>39.6 MiB</td>
+							</tr>
+							</tbody>
+						</table>
+					</section>
+				</section>
 
-            <!-- References -->
+				<!-- References -->
 
-            <section><h1>References</h1>
-                <ul>
-                    <li><a href="https://www.packtpub.com/books/content/7-tips-python-performance">7 Tips For Python Performance</a></li>
-                    <li><a href="https://twitter.com/raymondh/status/1144527183341375488">Raymond Hettinger tweet</a></li>
-                    <li><a href="https://tech.oyster.com/save-ram-with-python-slots/">Save ram with python slots</a></li>
-                </ul>
-            </section>
+				<section><h1>References</h1>
+					<ul>
+						<li><a href="https://www.packtpub.com/books/content/7-tips-python-performance">7 Tips For Python Performance</a></li>
+						<li><a href="https://twitter.com/raymondh/status/1144527183341375488">Raymond Hettinger tweet</a></li>
+						<li><a href="https://tech.oyster.com/save-ram-with-python-slots/">Save ram with python slots</a></li>
+					</ul>
+				</section>
 
-        </div>
-    </div>
+			</div>
+		</div>
 
-		<script src="js/reveal.js"></script>
-
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
 		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/highlight/highlight.js' },
-					{ src: 'plugin/notes/notes.js', async: true }
-				]
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
 		</script>
 	</body>
